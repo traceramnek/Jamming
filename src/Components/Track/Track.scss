@@ -1,3 +1,5 @@
+$charcoal: #333;
+
 .Track {
     display: flex;
     align-items: center;
@@ -6,15 +8,16 @@
   
 .Track-action {
     cursor: pointer;
-    padding: .5rem;
     font-size: 1.05rem;
     transition: color .25s;
     border: 0px;
     background-color: rgba(0, 0, 0, 0);
-    color: #fff;
+    color: ghostwhite;
 
     &:hover {
-      color: rgba(265, 265, 265, .5);
+      color: $charcoal;
+      background-color: ghostwhite;
+      border-radius: 50%;
     }
 }
   

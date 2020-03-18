@@ -7,8 +7,8 @@ $button-color: #ad3f0b;
     align-items: center;
     overflow-y: scroll;
     width: 37%;
-    max-height: 950px;
-    padding: 2.27rem 1.16rem;
+    max-height: 500px;
+    padding: 1rem ;
     background-color: $bg-color;
     box-shadow: 0 4px 2px 2px #000000;
 
@@ -19,9 +19,16 @@ $button-color: #ad3f0b;
         background: transparent;
         border-bottom: 1px solid #6f6f6f;
         font-family: 'Poppins', sans-serif;
+        transition: .25s;
         font-size: 1.55rem;
         color: #fff;
-      }
+        font-weight: 500;
+
+        &:focus{
+          border-bottom: 2px solid ghostwhite;
+          transition: .25s;
+        }
+    }
   }
   
   

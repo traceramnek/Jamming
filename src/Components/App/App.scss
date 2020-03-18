@@ -13,11 +13,11 @@ html {
 }
 
 h1 {
-  padding: .77rem 0;
-  background-color: #5f261e;
+  padding: 1rem 0;
+  background-color: transparent;
   text-align: center;
   font-family: 'Poppins', sans-serif;
-  font-size: 1.88rem;
+  font-size: 2rem;
   color: #fff;
 
   .highlight {
@@ -39,7 +39,7 @@ h2 {
 
 .App {
   height: 100%;
-  background-image: url('./running-vehicles-on-road-3347244.jpg');
+  background-image: url('../../assets/img/running-vehicles-on-road-3347244.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -52,6 +52,14 @@ h2 {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+.nav-logo{
+  height: 70px;
+  margin: 5px 15px; // to line up stroke and regular logo
+  position: absolute;
+  opacity: 1;
+  z-index: 2;
 }
 
 @media only screen and (max-width: 1020px) {

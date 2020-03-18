@@ -3,13 +3,10 @@ import './TrackList.scss';
 import Track from '../Track/Track';
 
 class TrackList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
+  
     render() {
         return (
-            <div className="TrackList">
+            <div style={{marginTop: 40}} className="TrackList">
                 {
                     this.props.tracks.map(track => {
                         return <Track track={track} key={track.id} 

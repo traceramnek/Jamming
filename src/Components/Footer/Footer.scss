@@ -1,0 +1,15 @@
+$bg-color: #5f261e;
+
+.Footer{
+    display: flex;
+    color: ghostwhite;
+    flex-direction: column;
+    font-size: .8em;
+    padding: 1em;
+    background-color: $bg-color;
+    align-items: center;
+
+    p{
+        padding: 5px;
+    }
+}

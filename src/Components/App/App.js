@@ -4,23 +4,19 @@ import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../utils/Spotify'
+import Footer from '../Footer/Footer';
+import logo from '../../assets/img/KwanSH_Logo_White.png'
+
+const portfolioLink = 'https://traceramnek.github.io/';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      searchResults: [
-        { name: 'Remember The Urge', artist: 'the GazettE', album: 'TOXIC', id: 1 },
-        { name: 'Haunt', artist: 'BANKS', album: 'The Altar', id: 2 },
-        { name: 'Lloraras', artist: 'Oscar D\'Leon', album: 'Traicionera (Baile Total)', id: 3 }
-      ],
+      searchResults: [],
       playlistName: '',
-      playlistTracks: [
-        { name: 'The Pledge', artist: 'Dir En Grey', album: 'MARROW OF A BONE', id: 4 },
-        { name: 'Chapter Four', artist: 'Avenged Sevenfold', album: 'Waking The Fallen', id: 5 },
-        { name: 'Biru', artist: 'Knuckle Bones', album: 'C\'est La Vie', id: 6 }
-      ]
+      playlistTracks: []
     };
 
     this.addTrack = this.addTrack.bind(this);
@@ -28,6 +24,10 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+  }
+
+  componentDidMount() {
+    Spotify.getAccessToken();
   }
 
   addTrack(track) {
@@ -59,6 +59,13 @@ class App extends React.Component {
 
   savePlaylist() {
     let trackURIs = this.state.playlistTracks.map(track => track.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+      this.setState({
+        playlistName: 'New Playlist',
+        playlistTracks: []
+      });
+    });
+
   }
 
   search(searchTerm) {
@@ -73,9 +80,13 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <a href={portfolioLink} target="_blank" title="Kwan's Portfolio">
+          <img className="nav-logo" src={logo} alt="Kwan Holloway Logo" />
+        </a>
+
         <div className="App">
           <div className="overlay">
+            <h1>Jammify!</h1>
             <SearchBar onSearch={this.search} />
             <div className="App-playlist">
               <SearchResults searchResults={this.state.searchResults}
@@ -87,10 +98,11 @@ class App extends React.Component {
                 onNameChange={this.updatePlaylistName}
                 onSave={this.savePlaylist} />
 
-                
+
             </div>
           </div>
         </div>
+        <Footer />
 
       </div>
     );

@@ -2,9 +2,8 @@ $bg-color: rgba(169, 71, 47, 0.7);
 
 .SearchResults {
     width: 50%;
-    height: 350px;
-    overflow-y: scroll;
-    padding: .88rem;
+    max-height: 350px;
+    padding: 1rem 1rem 2rem 1rem;
     background-color: $bg-color;
     box-shadow: 0 4px 2px 2px #000000;
   }
@@ -19,4 +18,9 @@ $bg-color: rgba(169, 71, 47, 0.7);
       width: 90%;
       margin-bottom: 2rem;
     }
+  }
+
+  .results{
+    position: absolute;
+    font-weight: 500;
   }
