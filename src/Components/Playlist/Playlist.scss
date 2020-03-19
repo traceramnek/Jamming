@@ -3,6 +3,7 @@ $button-color: #ad3f0b;
 
 .Playlist {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
@@ -28,7 +29,18 @@ $button-color: #ad3f0b;
           border-bottom: 2px solid ghostwhite;
           transition: .25s;
         }
+
+        &::placeholder {
+          color: ghostwhite;
+          opacity: 0.5;
+        }
     }
+  }
+
+  .track-count{
+    position: absolute;
+    top: 70px;
+    left: 20px;
   }
   
   

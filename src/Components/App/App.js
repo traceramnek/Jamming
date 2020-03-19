@@ -6,6 +6,9 @@ import Playlist from '../Playlist/Playlist';
 import Spotify from '../../utils/Spotify'
 import Footer from '../Footer/Footer';
 import logo from '../../assets/img/KwanSH_Logo_White.png'
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import { Slide } from '@material-ui/core';
 
 const portfolioLink = 'https://traceramnek.github.io/';
 
@@ -14,21 +17,33 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      searchTerm: '',
       searchResults: [],
       playlistName: '',
-      playlistTracks: []
+      playlistTracks: [],
+      userPlaylists: [],
+      open: false,
+      severity: 'success',
+      message: '',
+      autoHideDuration: 5000
     };
 
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
+    this.getUserPlaylists = this.getUserPlaylists.bind(this);
+    this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.search = this.search.bind(this);
   }
 
   componentDidMount() {
+    // get token on load from user
     Spotify.getAccessToken();
+    this.getUserPlaylists();
   }
+
+
 
   addTrack(track) {
     if (!(this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id))) {
@@ -36,6 +51,13 @@ class App extends React.Component {
       updatedTracks.push(track);
       this.setState({
         playlistTracks: updatedTracks
+      });
+    } else {
+      this.setState({
+        open: true,
+        message: 'Looks like that song is already in your playlist.',
+        severity: 'warning',
+        autoHideDuration: 5000
       });
     }
   }
@@ -57,39 +79,95 @@ class App extends React.Component {
     });
   }
 
-  savePlaylist() {
-    let trackURIs = this.state.playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+  getUserPlaylists() {
+    Spotify.getUserPlaylists().then((response) => {
       this.setState({
-        playlistName: 'New Playlist',
-        playlistTracks: []
+        userPlaylists: response
       });
+      console.log(this.state.userPlaylists);
     });
+  }
 
+  savePlaylist() {
+    let index = this.state.userPlaylists.findIndex(playlist => playlist.name === this.state.playlistName);
+    if (index !== -1) {
+      this.setState({
+        open: true,
+        message: 'Oops! You already have a playlist with that name.',
+        severity: 'warning',
+        autoHideDuration: 5000
+      });
+    } else { // add the playlist if it doesn't exist
+      let trackURIs = this.state.playlistTracks.map(track => track.uri);
+      if (trackURIs.length > 0) {
+        Spotify.savePlaylist(this.state.playlistName, trackURIs);
+        this.setState({
+          playlistName: '',
+          playlistTracks: [],
+          open: true,
+          severity: 'success',
+          message: 'Playlist successfully added to your Spotify! Go Jam to it!',
+          autoHideDuration: 5000
+        });
+        this.getUserPlaylists();
+      } else {
+        this.setState({
+          open: true,
+          severity: 'warning',
+          message: 'Can\'t add a playlsit with no songs!',
+          autoHideDuration: 5000
+        });
+      }
+
+    }
   }
 
   search(searchTerm) {
     Spotify.search(searchTerm).then(searchRes => {
       this.setState({
-        searchResults: searchRes
+        searchResults: searchRes,
+        searchTerm: searchTerm
       })
     });
 
   }
 
+  handleSnackbarClose() {
+    this.setState({
+      open: false
+    });
+  }
+
   render() {
     return (
       <div>
-        <a href={portfolioLink} target="_blank" title="Kwan's Portfolio">
+        <div>
+          <Slide direction="down" in={this.state.open} mountOnEnter unmountOnExit>
+            <div>
+              <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={this.state.open}
+                autoHideDuration={this.state.autoHideDuration}
+                onClose={this.handleSnackbarClose}>
+                <Alert onClose={this.handleSnackbarClose}
+                  severity={this.state.severity}>
+                  {this.state.message}
+                </Alert>
+              </Snackbar>
+            </div>
+          </Slide>
+        </div>
+        <a href={portfolioLink} target="_blank" title="Kwan's Portfolio"
+          rel="noopener noreferrer">
           <img className="nav-logo" src={logo} alt="Kwan Holloway Logo" />
         </a>
 
         <div className="App">
           <div className="overlay">
-            <h1>Jammify!</h1>
+            <h1 className="jammify-header">Jammify!</h1>
             <SearchBar onSearch={this.search} />
             <div className="App-playlist">
-              <SearchResults searchResults={this.state.searchResults}
+              <SearchResults searchTerm={this.state.searchTerm} searchResults={this.state.searchResults}
                 onAdd={this.addTrack}
               />
               <Playlist playlistName={this.state.playlistName}
@@ -97,13 +175,10 @@ class App extends React.Component {
                 onRemove={this.removeTrack}
                 onNameChange={this.updatePlaylistName}
                 onSave={this.savePlaylist} />
-
-
             </div>
           </div>
         </div>
         <Footer />
-
       </div>
     );
   }

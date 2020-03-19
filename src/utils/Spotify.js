@@ -1,6 +1,6 @@
 let userAccessToken;
 let appClientId = 'be0108d073204d0ebfcb4033b757a43a';
-let redirectURI = 'http://localhost:3000/';
+let redirectURI = 'https://jammify.surge.sh';
 
 const Spotify = {
     getAccessToken() {
@@ -45,6 +45,23 @@ const Spotify = {
                 uri: track.uri
             }))
         })
+    },
+
+    getUserPlaylists() {
+        const accessToken = Spotify.getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken}` }
+        let userId;
+        // fetch userId so you can use it to create a playlist
+        return fetch(`https://api.spotify.com/v1/me`, { headers: headers }
+        ).then(response => response.json()
+        ).then(jsonResponse => {
+            userId = jsonResponse.id;
+            return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {headers: headers}
+            ).then(response => response.json()
+            ).then(jsonResponse => {
+                return jsonResponse.items;
+            })
+        });
     },
 
     savePlaylist(playlistName, playlistTracks) {
