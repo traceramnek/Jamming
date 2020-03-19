@@ -33,12 +33,12 @@ h2 {
 }
 .overlay{
   background-color: $overlay-color;
-  padding: 0 17% 10% 17%;
-  height: 100%;
+  padding: 0 17% 0 17%;
+  height: calc(100vh - 77px);
 }
 
 .App {
-  height: 100%;
+  // height: 100%;
   background-image: url('../../assets/img/running-vehicles-on-road-3347244.jpg');
   background-size: cover;
   background-position: center;
