@@ -6,11 +6,22 @@ $bg-color: rgba(169, 71, 47, 0.7);
     padding: 1rem 1rem 2rem 1rem;
     background-color: $bg-color;
     box-shadow: 0 4px 2px 2px #000000;
-  }
+}
+
+.results{
+  // position: absolute;
+  font-weight: 500;
+}
   
   ::-webkit-scrollbar {
       width: 0px;
       background: transparent;
+  }
+
+  @media only screen and (max-width: 480px) {
+    .SearchResults{
+      max-height: 230px;
+    }
   }
   
   @media only screen and (max-width: 1020px) {
@@ -20,7 +31,5 @@ $bg-color: rgba(169, 71, 47, 0.7);
     }
   }
 
-  .results{
-    // position: absolute;
-    font-weight: 500;
-  }
+  
+
