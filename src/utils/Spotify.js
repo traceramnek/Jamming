@@ -1,7 +1,7 @@
 let userAccessToken;
 let appClientId = 'be0108d073204d0ebfcb4033b757a43a';
-// let redirectURI = 'https://jammify.surge.sh';
-let redirectURI = 'http://localhost:3000';
+let redirectURI = 'https://jammify.surge.sh';
+// let redirectURI = 'http://localhost:3000';
 
 const Spotify = {
     getAccessToken() {

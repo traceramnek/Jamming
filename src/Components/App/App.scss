@@ -25,7 +25,10 @@ html {
   }
 }
 
-
+.summary{
+  text-align: center;
+  margin-top: 15px;
+}
 
 h2 {
   font-family: 'Poppins', sans-serif;
@@ -33,8 +36,9 @@ h2 {
 }
 .overlay{
   background-color: $overlay-color;
-  padding: 0 17% 0 17%;
+  padding: 0 10%;
   height: calc(100vh - 77px);
+  overflow-y: auto;
 }
 
 .App {
@@ -62,9 +66,24 @@ h2 {
   z-index: 2;
 }
 
+@media only screen and (max-width: 480px) {
+  .summary{
+    font-size: 14px;
+    padding: 0 10px;
+  }
+
+  .nav-logo{
+    height: 40px;
+  }
+}
+
 @media only screen and (max-width: 1020px) {
   .App-playlist {
     align-items: center;
     flex-direction: column;
+  }
+  .overlay {
+    // height: 100%;
+    padding: 0 10% 5% 10%;
   }
 }

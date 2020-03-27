@@ -89,8 +89,18 @@ class App extends React.Component {
   }
 
   savePlaylist() {
+    if (this.state.playlistName === '') { // if name is blank
+      this.setState({
+        open: true,
+        message: 'Your playlist needs an awesome name before adding it!',
+        severity: 'warning',
+        autoHideDuration: 5000
+      });
+      return;
+    } 
+
     let index = this.state.userPlaylists.findIndex(playlist => playlist.name === this.state.playlistName);
-    if (index !== -1) {
+    if (index !== -1) { // if playlist with that name exists
       this.setState({
         open: true,
         message: 'Oops! You already have a playlist with that name.',
@@ -165,6 +175,7 @@ class App extends React.Component {
         <div className="App">
           <div className="overlay">
             <h1 className="jammify-header">Jammify!</h1>
+            <h6 className="summary">Search Songs, Create Playlists, and add them to your Spotify!</h6>
             <SearchBar onSearch={this.search} />
             <div className="App-playlist">
               <SearchResults searchTerm={this.state.searchTerm} searchResults={this.state.searchResults}
