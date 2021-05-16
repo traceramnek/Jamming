@@ -35,7 +35,6 @@ class App extends React.Component {
     this.getUserPlaylists = this.getUserPlaylists.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.search = this.search.bind(this);
-    this.filterSearchResults = this.filterSearchResults.bind(this);
   }
 
   componentDidMount() {
