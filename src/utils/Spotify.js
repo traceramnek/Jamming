@@ -1,7 +1,9 @@
+import environment from '../assets/properties/Properties';
+
 let userAccessToken;
-let appClientId = 'be0108d073204d0ebfcb4033b757a43a';
+let appClientId = environment.appClientId;
 // let redirectURI = 'https://jammify.surge.sh';
-let redirectURI = 'http://localhost:3000'; // for local development
+let redirectURI = environment.redirectURI; // for local development
 
 const Spotify = {
     getAccessToken() {

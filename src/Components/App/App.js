@@ -35,6 +35,7 @@ class App extends React.Component {
     this.getUserPlaylists = this.getUserPlaylists.bind(this);
     this.handleSnackbarClose = this.handleSnackbarClose.bind(this);
     this.search = this.search.bind(this);
+    this.filterSearchResults = this.filterSearchResults.bind(this);
   }
 
   componentDidMount() {
@@ -139,7 +140,12 @@ class App extends React.Component {
         searchTerm: searchTerm
       })
     });
+  }
 
+  filterSearchRedsults() {
+    return this.state.searchResults.filter((track) => 
+         this.state.playlistTracks.indexOf(track) < 0
+    );
   }
 
   handleSnackbarClose() {
